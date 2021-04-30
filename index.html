@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400&display=swap');
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="index.html" id="codeforceslogo"><img src="/Images/codeforces-logo-with-telegram.png" alt="CodeforcesLogo" height="60" width="200"></a>
+        <div class="menu" id="tabs">
+            <a href="index.html">HOME</a>
+            <a href="">TOP</a>
+            <a href="">CONTESTS</a>
+            <a href="">GYM</a>
+            <a href="">PROBLEMSET</a>
+            <a href="">GROUPS</a>
+            <a href="">RATING</a>
+            <a href="">EDU</a>
+            <a href="https://codeforces.com/apiHelp" target="_blank">API</a>
+            <a href="">CALENDAR</a>
+            <a href="">HELP</a>
+            <a href="javascript:void(0);" class="icon" onclick="menuResponsive()">
+            <i class="fa fa-bars"></i></a>
+        </div>
+    </div>
+    <h1>WELCOME TO CODEFORCES</h1>
+    <br>
+    <p style="padding-left: 20px; text-decoration: overline; font-family: 'Oswald', sans-serif;" >
+       Lorem ipsum dolor sit amet consectetur, adipisicing elit. Totam praesentium libero harum, consequatur et quas beatae molestiae, commodi adipisci itaque nam eius id laboriosam neque veritatis a illum magni ratione porro alias iusto ipsum. Quia ad autem itaque error veritatis repellendus veniam quidem vel in delectus quisquam rerum aperiam dolore labore magni fugiat eaque repudiandae facilis, blanditiis velit qui esse! Blanditiis a veniam earum dolorum error eaque assumenda accusamus voluptatem dicta, optio laborum quisquam nulla dolorem, non rerum rem adipisci alias? Autem, obcaecati. Ducimus culpa omnis, dolores voluptas, voluptatem soluta atque aliquid vel exercitationem sequi enim ea temporibus praesentium! Iure.
+    </p>
+    <div class="roundbox" style="width: 15em;margin: 2em auto;">
+        <div class="roundbox-lt">&nbsp;</div>
+        <div class="roundbox-rt">&nbsp;</div>
+    <div class = "login">
+        <form action="" method="">
+        <fieldset>
+            <legend>Search for Codeforces user</legend>
+            <label for="username">Enter username:</label>
+            <input type="text" name="Handle" id="handle">
+            <br>
+            <br>
+            <input type="button" name="search" id="search" value="Search" onclick="getFORCES()">
+        </fieldset>
+        </form>
+    </div>
+    </div>
+    <div class = "display" id="details">
+        <img src="/Images/profileicon.jpg" alt="User Profile Image" id="profileimg">
+        <table class="tabledetails">
+            <tbody>
+                <tr class="row1">
+                    <th>Handle:</th>
+                    <th><span id="handlename">xxxx</span></th>
+                </tr>
+                <tr>
+                    <td>Name:</td>
+                    <td><span class="name" id="name">xxxx</span></td>
+                </tr>
+                <tr>
+                    <td>Organization:</td>
+                    <td><span class="name" id="organization">xxxx</span></td>
+                </tr>
+                <tr>
+                    <td>Country:</td>
+                    <td><span class="name" id="country">xxxx</span></td>
+                </tr>
+                <tr>
+                    <td>City:</td>
+                    <td><span class="name" id="city">xxxx</span></td>
+                </tr>
+                <tr>
+                    <td>Max. Rank:</td>
+                    <td><span class="name" id="maxrank">0000</span></td>
+                </tr>
+                <tr>
+                    <td>Max. Rating:</td>
+                    <td><span class="name" id="maxrating">0000</span></td>
+                </tr>
+            </tbody>
+        </table>
+            <!--<p>
+                Name: <span class="name" id="name">xxx</span>
+                <br>
+                Organization: <span id="organization">xxx</span>
+                <br>
+                Country: <span id="country">xxx</span>
+                <br>
+                City: <span id="city">xxx</span>
+                <br>
+                Max. Rank: <span id="maxrank">0000</span>
+                <br>
+                Max. Rating: <span id="maxrating">0000</span>
+            </p>-->
+    </div>
+    <script>
+        function menuResponsive() {
+            var x = document.getElementById("tabs");
+            if (x.className === "menu") {
+                x.className += " responsive";
+            }
+            else {
+                x.className = "menu";
+            }
+        }
+        async function getFORCES()
+        {
+            var username = document.getElementById(`handle`).value;
+            const api_url = `https://codeforces.com/api/user.info?handles=${username}`
+            const response = await fetch(api_url);
+            const data = await response.json();
+            const{ titlePhoto, handle, firstName, lastName, organization, country, city, maxRank, maxRating, LastOnlineTimeSeconds } = data;
+            document.getElementById('profileimg').src = data.result[0].titlePhoto;
+            document.getElementById('handlename').innerHTML = data.result[0].handle;
+            document.getElementById('name').innerHTML = data.result[0].firstName + " " + data.result[0].lastName;
+            document.getElementById('organization').innerHTML = data.result[0].organization;
+            document.getElementById('country').innerHTML = data.result[0].country;
+            document.getElementById('city').innerHTML = data.result[0].city;
+            document.getElementById('maxrank').innerHTML = data.result[0].maxRank;
+            document.getElementById('maxrating').innerHTML = data.result[0].maxRating;
+            console.log(data.result[0].titlePhoto);
+            console.log(data.result[0].handle);
+            console.log(data.result[0].firstName + " " + data.result[0].lastName);
+            console.log(data.result[0].organization);
+            console.log(data.result[0].country);
+            console.log(data.result[0].city);
+            console.log(data.result[0].maxRank);
+            console.log(data.result[0].maxRating);
+            console.log(data);
+        }
+        getFORCES();
+    </script>
+</body>
+</html>
