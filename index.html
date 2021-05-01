@@ -11,9 +11,8 @@
         @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400&display=swap');
     </style>
 </head>
-<body>
+<body style="background-color: #c2ecf5;">
     <div class="header">
-        <a href="index.html" id="codeforceslogo"><img src="/Images/codeforces-logo-with-telegram.png" alt="CodeforcesLogo" height="60" width="200"></a>
         <div class="menu" id="tabs">
             <a href="index.html">HOME</a>
             <a href="">TOP</a>
@@ -32,14 +31,14 @@
     </div>
     <h1>WELCOME TO CODEFORCES</h1>
     <br>
-    <p style="padding-left: 20px; text-decoration: overline; font-family: 'Oswald', sans-serif;" >
+    <!--Removing placeholder: <p style="padding-left: 20px; text-decoration: overline; font-family: 'Oswald', sans-serif;" >
        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Totam praesentium libero harum, consequatur et quas beatae molestiae, commodi adipisci itaque nam eius id laboriosam neque veritatis a illum magni ratione porro alias iusto ipsum. Quia ad autem itaque error veritatis repellendus veniam quidem vel in delectus quisquam rerum aperiam dolore labore magni fugiat eaque repudiandae facilis, blanditiis velit qui esse! Blanditiis a veniam earum dolorum error eaque assumenda accusamus voluptatem dicta, optio laborum quisquam nulla dolorem, non rerum rem adipisci alias? Autem, obcaecati. Ducimus culpa omnis, dolores voluptas, voluptatem soluta atque aliquid vel exercitationem sequi enim ea temporibus praesentium! Iure.
-    </p>
-    <div class="roundbox" style="width: 15em;margin: 2em auto;">
+    </p>-->
+    <!--<div class="roundbox" style="width: 15em;margin: 2em auto;">
         <div class="roundbox-lt">&nbsp;</div>
-        <div class="roundbox-rt">&nbsp;</div>
+        <div class="roundbox-rt">&nbsp;</div>-->
     <div class = "login">
-        <form action="" method="">
+        <!--<form action="" method="">
         <fieldset>
             <legend>Search for Codeforces user</legend>
             <label for="username">Enter username:</label>
@@ -48,9 +47,13 @@
             <br>
             <input type="button" name="search" id="search" value="Search" onclick="getFORCES()">
         </fieldset>
-        </form>
+        </form>-->
+        <div class="searchbox">
+            <input type="text" name="Handle" id="handle" class="handle" placeholder="Enter Codeforces Username"/>
+            <button id="search" class="search" onclick="getFORCES()">Search</button>
+        </div>    
     </div>
-    </div>
+    <br>
     <div class = "display" id="details">
         <img src="/Images/profileicon.jpg" alt="User Profile Image" id="profileimg">
         <table class="tabledetails">
@@ -85,19 +88,27 @@
                 </tr>
             </tbody>
         </table>
-            <!--<p>
-                Name: <span class="name" id="name">xxx</span>
-                <br>
-                Organization: <span id="organization">xxx</span>
-                <br>
-                Country: <span id="country">xxx</span>
-                <br>
-                City: <span id="city">xxx</span>
-                <br>
-                Max. Rank: <span id="maxrank">0000</span>
-                <br>
-                Max. Rating: <span id="maxrating">0000</span>
-            </p>-->
+    </div>
+    <br> <br> <br>
+    <div class="contests">
+        <div class="contestlist">
+            <button id="displaycontests" onclick="viewCONTESTS()">View Contests</button>
+            <br>
+            <br>
+            <span>Id: </span><span id="contestid">0000</span>
+            <br>
+            <span>Name: </span><span id="contestname">xxxx</span>
+            <br>
+            <span>Duration: </span><span id="contestduration">0000 hours</span>
+            <br>
+            <span>Starting Date: </span><span id="contestdate">dd/mm/yyyy</span>
+            <br>
+            <span>Starting Time: </span><span id="contesttime">00:00:00</span>
+            <br>
+            <br>
+            <button id="previous" onclick="previousBUTTON()">Previous</button>
+            <button id="next" onclick="nextBUTTON()">Next</button>
+        </div>
     </div>
     <script>
         function menuResponsive() {
@@ -112,8 +123,8 @@
         async function getFORCES()
         {
             var username = document.getElementById(`handle`).value;
-            const api_url = `https://codeforces.com/api/user.info?handles=${username}`
-            const response = await fetch(api_url);
+            const userapi_url = `https://codeforces.com/api/user.info?handles=${username}`
+            const response = await fetch(userapi_url);
             const data = await response.json();
             const{ titlePhoto, handle, firstName, lastName, organization, country, city, maxRank, maxRating, LastOnlineTimeSeconds } = data;
             document.getElementById('profileimg').src = data.result[0].titlePhoto;
@@ -124,6 +135,7 @@
             document.getElementById('city').innerHTML = data.result[0].city;
             document.getElementById('maxrank').innerHTML = data.result[0].maxRank;
             document.getElementById('maxrating').innerHTML = data.result[0].maxRating;
+            /**
             console.log(data.result[0].titlePhoto);
             console.log(data.result[0].handle);
             console.log(data.result[0].firstName + " " + data.result[0].lastName);
@@ -133,8 +145,47 @@
             console.log(data.result[0].maxRank);
             console.log(data.result[0].maxRating);
             console.log(data);
+            **/
         }
-        getFORCES();
+
+        var position = 0;
+        var data2;
+        async function viewCONTESTS()
+        {
+            const contestapi_url = `https://codeforces.com/api/contest.list?gym=false`;
+            const response2 = await fetch(contestapi_url);
+            data2 = await response2.json();
+            display();
+        }
+        async function display()
+        {
+            const{ id, name, durationSeconds, startTimeSeconds } = data2;
+            const date = new Date((data2.result[position].startTimeSeconds)*1000);
+            const startingDate = date.toLocaleDateString();
+            const startingTime = date.toLocaleTimeString();
+            document.getElementById('contestid').innerHTML = data2.result[position].id;
+            document.getElementById('contestname').innerHTML = data2.result[position].name;
+            document.getElementById('contestduration').innerHTML = (data2.result[position].durationSeconds/3600) + " hours";
+            document.getElementById('contestdate').innerHTML = startingDate;
+            document.getElementById('contesttime').innerHTML = startingTime;
+            /**
+            console.log(data2.result[position].id);
+            console.log(data2.result[position].name);
+            console.log(data2.result[position].durationSeconds);
+            console.log(data2.result[position].startTimeSeconds);
+            console.log(data2);
+            **/
+        }
+        async function previousBUTTON()
+        {
+            position--;
+            display();
+        }
+        async function nextBUTTON()
+        {
+            position++;
+            display();
+        }
     </script>
 </body>
 </html>

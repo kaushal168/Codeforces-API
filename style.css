@@ -2,11 +2,12 @@
     box-sizing: border-box;
 }
 body{
-    /*background: url(/Images/background7.jpg);
-    height: 100%;
-    background-size: cover;*/
     padding: 0;
     border: 0;
+    margin: 0;
+}
+.header{
+    background-color:rgb(15,15,15);
 }
 .menu{
     overflow: hidden;
@@ -14,7 +15,7 @@ body{
 .menu a{
     float:left;
     display: block;
-    color: black;
+    color:white;
     text-decoration: none;
     text-align:center;
     padding: 14px 16px;
@@ -36,6 +37,31 @@ h1{
     word-spacing: 1rem;
     letter-spacing:0.5rem;
     font-size: 300%;
+}
+.searchbox{
+    background: #fff;
+    width: 375px;
+    height: 40px;
+    border-radius: 15px;
+    margin: auto;
+    position: relative;
+    text-align: center;    
+    display: flex;
+    overflow: hidden;
+}
+.handle{
+    width: 90%;
+    padding-left: 15px;
+    border: none;
+    outline: none;
+}  
+.search{
+    cursor: pointer;
+    border: none;   
+    outline: none;
+    color: whitesmoke;
+    height: 100%;
+    background-color: rgb(15, 15, 15);
 }
 #profileimg{
     height: 175px;
@@ -77,12 +103,62 @@ tr:nth-child(even){
 .row1{
     background-color: rgba(3, 233, 250, 0.87);
 }
-#search{
+.contests{
+    width: 30%;
+    height: auto;
+    margin: 50px auto;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid rgba(0,0,0,0.12);
+    border-color: grey;
+    border-collapse: collapse;
+    border-radius: 3px;
+    text-align: center;
+    position: relative;  
+    background-color:#f2f2f2;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-family: 'Oswald', sans-serif;
+    overflow: hidden;
+    font-weight: 500;
+}
+#displaycontests{
+    background-color: white;
+    border: 2px solid rgba(3, 233, 250, 0.87);
     color: black;
-    padding: 5px 10px;
-    float: right;
+    padding: 10px 20px;
+    text-align: center;
     text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
     cursor: pointer;
+}
+#displaycontests:hover{
+    background-color: rgba(3, 233, 250, 0.87);
+    color: white;
+}
+#previous, #next{
+    text-decoration: none;
+    display: inline-block;
+    padding: 8px 16px;
+    border: 2px solid rgba(3, 233, 250, 0.87);
+    cursor: pointer;
+}
+#previous{
+    color: black;
+}
+#next{
+    color: black;
+}
+#previous:hover{
+    background-color: rgba(3, 233, 250, 0.87);
+    color: black;
+}
+#next:hover{
+    background-color: rgba(3, 233, 250, 0.87);
+    color: black;
 }
 @media screen and (max-width: 600px) {
     .menu a:not(:first-child) {display: none;}
